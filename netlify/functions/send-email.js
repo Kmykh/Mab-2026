@@ -55,8 +55,8 @@ exports.handler = async (event, context) => {
             body { font-family: Georgia, serif; background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); margin: 0; padding: 30px 20px; }
             .container { max-width: 540px; margin: 0 auto; background: linear-gradient(180deg, #FDF8E8 0%, #f9f0d9 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(99,13,22,0.4), 0 0 40px rgba(197,160,89,0.3); border: 4px solid #c5a059; }
             .header { background: linear-gradient(135deg, #630d16 0%, #8b1a2b 50%, #630d16 100%); padding: 45px 30px; text-align: center; border-bottom: 4px solid #c5a059; position: relative; }
-            .header::before { content: "✨"; position: absolute; top: 15px; left: 20px; font-size: 20px; }
-            .header::after { content: "✨"; position: absolute; top: 15px; right: 20px; font-size: 20px; }
+            .header::before { content: ""; position: absolute; top: 15px; left: 20px; font-size: 20px; }
+            .header::after { content: ""; position: absolute; top: 15px; right: 20px; font-size: 20px; }
             .header h1 { color: #c5a059; font-family: Georgia, serif; margin: 0; font-size: 36px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 2px; }
             .header .subtitle { color: #f4e4bc; margin: 15px 0 0; font-style: italic; font-size: 18px; letter-spacing: 1px; }
             .hearts-row { text-align: center; padding: 20px 0 5px; font-size: 28px; letter-spacing: 15px; }
@@ -83,11 +83,11 @@ exports.handler = async (event, context) => {
         <body>
           <div class="container">
             <div class="header">
-              <h1>💕 Reserva Confirmada 💕</h1>
+              <h1>Reserva Confirmada</h1>
               <p class="subtitle">Una cita muy especial te espera</p>
             </div>
             
-            <div class="hearts-row">💖💝💖</div>
+            <div class="hearts-row"></div>
             
             <div class="content">
               <p class="greeting">Mi hermosa Mabel...</p>
@@ -98,27 +98,27 @@ exports.handler = async (event, context) => {
               </p>
               
               <div class="highlight">
-                🌟 Te espera un día lleno de sorpresas, risas y momentos inolvidables. 
+                Te espera un día lleno de sorpresas, risas y momentos inolvidables. 
                 Visitaremos lugares increíbles donde la ciencia y el arte cobran vida. 
-                ¡Prepárate para una aventura mágica! 🌟
+                ¡Prepárate para una aventura mágica!
               </div>
               
               <div class="info-box">
-                <h3>✨ Detalles de Nuestra Cita ✨</h3>
+                <h3>Detalles de Nuestra Cita</h3>
                 <div class="info-item">
-                  <span class="info-icon">📅</span>
+                  <span class="info-icon"></span>
                   <span class="info-text"><strong>Fecha:</strong> Viernes, 2 de Enero 2026</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-icon">🕐</span>
+                  <span class="info-icon"></span>
                   <span class="info-text"><strong>Hora:</strong> 10:00 AM - 4:00 PM</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-icon">🎭</span>
+                  <span class="info-icon"></span>
                   <span class="info-text"><strong>Actividades:</strong> Almuerzo romántico, museo y aventura científica</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-icon">👗</span>
+                  <span class="info-icon"></span>
                   <span class="info-text"><strong>Dress code:</strong> Cómoda y hermosa (como siempre)</span>
                 </div>
               </div>
@@ -131,14 +131,14 @@ exports.handler = async (event, context) => {
               <div class="signature">
                 <p>Con todo mi cariño y emoción,</p>
                 <p>esperando ansioso verte...</p>
-                <p class="heart-sig">💕</p>
+                <p class="heart-sig"></p>
                 <p class="name">Maycol</p>
               </div>
             </div>
             
             <div class="footer">
-              <span class="emoji">💌</span> Este mensaje fue enviado con mucho amor <span class="emoji">💌</span><br>
-              Nos vemos el viernes, mi bobita hermosa 🥰
+              Este mensaje fue enviado con mucho amor<br>
+              Nos vemos el viernes, mi bobita hermosa
             </div>
           </div>
         </body>
