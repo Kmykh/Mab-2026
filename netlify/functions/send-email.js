@@ -21,11 +21,12 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { tipo, guestEmail, mensaje } = JSON.parse(event.body);
+    const { tipo, guestEmail, mensaje, evento } = JSON.parse(event.body);
 
     const TU_EMAIL = 'maycoljhordan07@gmail.com';
     const TU_NUMERO = '+51932387692';
-    const NUMERO_MABEL = '+51999234643';
+    const CORREO_MABEL = 'maycoljhordan07@gmail.com'; // Cambiar por el de Mabel después
+    const NUMERO_MABEL = '+51932387692'; // Cambiar por el de Mabel después
 
     // Configurar Gmail
     const transporter = nodemailer.createTransport({
@@ -50,12 +51,12 @@ exports.handler = async (event, context) => {
         <html>
         <head>
           <style>
-            body { font-family: Georgia, serif; background: #f4e4bc; margin: 0; padding: 20px; }
-            .container { max-width: 520px; margin: 0 auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-            .header { background: linear-gradient(135deg, #630d16, #4d0a11); padding: 35px 20px; text-align: center; }
+            body { font-family: Georgia, serif; background: #FDF8E8; margin: 0; padding: 20px; }
+            .container { max-width: 520px; margin: 0 auto; background: #FDF8E8; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid #c5a059; }
+            .header { background: linear-gradient(135deg, #630d16, #4d0a11); padding: 35px 20px; text-align: center; border-bottom: 3px solid #c5a059; }
             .header h1 { color: #c5a059; font-family: Georgia, serif; margin: 0; font-size: 32px; }
             .header p { color: rgba(255,255,255,0.9); margin: 10px 0 0; font-style: italic; }
-            .content { padding: 35px; text-align: center; background: linear-gradient(180deg, #fffef9, #f4e4bc); }
+            .content { padding: 35px; text-align: center; background: #FDF8E8; }
             .heart { font-size: 50px; margin-bottom: 15px; }
             .message { font-size: 18px; color: #333; line-height: 1.8; margin-bottom: 25px; }
             .info-box { background: white; border: 2px solid #c5a059; border-radius: 12px; padding: 25px; margin: 25px 0; text-align: left; }
@@ -75,15 +76,15 @@ exports.handler = async (event, context) => {
               <div class="heart">💝</div>
               <p class="message">
                 Hermosa Mabel, tu reserva ha sido confirmada exitosamente.<br><br>
-                Maycol te espera para compartir una tarde increible juntos. 
-                Habra makis deliciosos, legos para construir y un paseo navideno que sera inolvidable.
+                Maycol te espera para compartir un dia increible juntos. 
+                Visitaremos un museo fascinante y exploraremos un lugar donde la ciencia cobra vida.
               </p>
               
               <div class="info-box">
                 <h3>Detalles de tu Cita</h3>
-                <p><strong>Fecha:</strong> Martes, 23 de Diciembre 2025</p>
-                <p><strong>Hora:</strong> 4:00 PM - 6:00 PM</p>
-                <p><strong>Actividades:</strong> Makis, Legos y Paseo Navideno</p>
+                <p><strong>Fecha:</strong> Viernes, 2 de Enero 2026</p>
+                <p><strong>Hora:</strong> 10:00 AM - 4:00 PM</p>
+                <p><strong>Actividades:</strong> Almuerzo especial, visita al museo y aventura cientifica</p>
               </div>
               
               <p class="signature">
@@ -93,7 +94,7 @@ exports.handler = async (event, context) => {
             </div>
             <div class="footer">
               Este es un mensaje automatico de confirmacion.<br>
-              Nos vemos el martes, bobita 
+              Nos vemos el viernes, bobita 
             </div>
           </div>
         </body>
@@ -102,8 +103,8 @@ exports.handler = async (event, context) => {
 
       await transporter.sendMail({
         from: '"Maycol - Invitacion Especial" <' + process.env.EMAIL_USER + '>',
-        to: guestEmail,
-        subject: 'Tu Reserva esta Confirmada - Cita del Martes 23',
+        to: CORREO_MABEL,
+        subject: 'Tu Reserva esta Confirmada - Viernes 2 de Enero 2026',
         html: emailParaMabel
       });
 
@@ -113,17 +114,17 @@ exports.handler = async (event, context) => {
         <html>
         <head>
           <style>
-            body { font-family: Georgia, serif; background: #f4e4bc; margin: 0; padding: 20px; }
-            .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+            body { font-family: Georgia, serif; background: #FDF8E8; margin: 0; padding: 20px; }
+            .container { max-width: 500px; margin: 0 auto; background: #FDF8E8; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid #c5a059; }
             .header { background: linear-gradient(135deg, #2d7a2d, #1e5a1e); padding: 30px; text-align: center; }
             .header h1 { color: white; font-family: Georgia, serif; margin: 0; font-size: 26px; }
             .badge { background: #ffd700; color: #333; padding: 8px 20px; border-radius: 20px; display: inline-block; font-weight: bold; margin-top: 10px; }
             .content { padding: 30px; }
-            .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+            .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ddd; }
             .info-row:last-child { border-bottom: none; }
             .label { color: #666; font-size: 14px; }
             .value { color: #333; font-weight: bold; font-size: 14px; }
-            .message-box { background: #f9f5eb; border-left: 4px solid #630d16; padding: 20px; margin: 20px 0; }
+            .message-box { background: white; border-left: 4px solid #630d16; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
             .message-box h4 { color: #630d16; margin: 0 0 10px; }
             .message-box p { color: #444; margin: 0; font-style: italic; line-height: 1.6; }
             .footer { background: #333; color: white; padding: 15px; text-align: center; font-size: 12px; }
@@ -138,20 +139,20 @@ exports.handler = async (event, context) => {
             <div class="content">
               <div class="info-row">
                 <span class="label">Fecha</span>
-                <span class="value">Martes, 23 de Diciembre</span>
+                <span class="value">Viernes, 2 de Enero 2026</span>
               </div>
               <div class="info-row">
                 <span class="label">Hora</span>
-                <span class="value">4:00 PM - 6:00 PM</span>
+                <span class="value">10:00 AM - 4:00 PM</span>
               </div>
               <div class="info-row">
                 <span class="label">Correo de Mabel</span>
-                <span class="value">${guestEmail}</span>
+                <span class="value">${CORREO_MABEL}</span>
               </div>
               
               <div class="message-box">
                 <h4>Mensaje de Mabel para ti:</h4>
-                <p>"${mensaje || 'No dejo mensaje, pero ACEPTO! 🎉'}"</p>
+                <p>"${mensaje || 'No dejo mensaje, pero ACEPTO!'}"</p>
               </div>
               
               <p style="text-align: center; color: #2d7a2d; font-size: 18px; margin-top: 20px;">
@@ -169,20 +170,20 @@ exports.handler = async (event, context) => {
       await transporter.sendMail({
         from: '"Sistema de Invitacion" <' + process.env.EMAIL_USER + '>',
         to: TU_EMAIL,
-        subject: 'MABEL HA ACEPTADO LA INVITACION!',
+        subject: 'MABEL HA ACEPTADO - Viernes 2 de Enero 2026',
         html: emailParaMaycol
       });
 
       // ========== SMS PARA TI ==========
       await twilioClient.messages.create({
-        body: 'MABEL HA ACEPTADO! La cita del Martes 23 (4-6PM) esta confirmada. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje adicional.'),
+        body: 'MABEL HA ACEPTADO! La cita del Viernes 2 de Enero (10AM-4PM) esta confirmada. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje adicional.'),
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: TU_NUMERO
       });
 
       // ========== SMS PARA MABEL ==========
       await twilioClient.messages.create({
-        body: 'Hola Mabel! Tu reserva para el Martes 23 de Diciembre (4-6 PM) esta confirmada. Maycol te espera con makis, legos y mucho carino. Nos vemos! - Con amor, Maycol',
+        body: 'Hola Princesa! Tu reserva para el Viernes 2 de Enero 2026 (10AM-4PM) esta confirmada. Maycol te espera para una aventura increible. Nos vemos! - Con amor, Maycol',
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: NUMERO_MABEL
       });
@@ -195,11 +196,11 @@ exports.handler = async (event, context) => {
         <head>
           <style>
             body { font-family: Georgia, serif; background: #f5f5f5; margin: 0; padding: 20px; }
-            .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+            .container { max-width: 500px; margin: 0 auto; background: #FDF8E8; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #888; }
             .header { background: linear-gradient(135deg, #666, #444); padding: 30px; text-align: center; }
             .header h1 { color: #ddd; font-family: Georgia, serif; margin: 0; font-size: 24px; }
             .content { padding: 30px; text-align: center; }
-            .message-box { background: #f9f9f9; border-left: 4px solid #888; padding: 20px; margin: 20px 0; text-align: left; }
+            .message-box { background: white; border-left: 4px solid #888; padding: 20px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
             .footer { background: #444; color: white; padding: 15px; text-align: center; font-size: 12px; }
           </style>
         </head>
@@ -209,7 +210,7 @@ exports.handler = async (event, context) => {
               <h1>Mabel ha Declinado</h1>
             </div>
             <div class="content">
-              <p>La invitacion para el Martes 23 de Diciembre ha sido declinada.</p>
+              <p>La invitacion para el Viernes 2 de Enero 2026 ha sido declinada.</p>
               
               ${mensaje ? `
               <div class="message-box">
@@ -231,13 +232,13 @@ exports.handler = async (event, context) => {
       await transporter.sendMail({
         from: '"Sistema de Invitacion" <' + process.env.EMAIL_USER + '>',
         to: TU_EMAIL,
-        subject: 'Mabel ha declinado la invitacion',
+        subject: 'Mabel ha declinado la invitacion - 2 de Enero',
         html: emailDecline
       });
 
       // SMS para ti
       await twilioClient.messages.create({
-        body: 'Mabel ha declinado la invitacion del Martes 23. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje.'),
+        body: 'Mabel ha declinado la invitacion del Viernes 2 de Enero. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje.'),
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: TU_NUMERO
       });

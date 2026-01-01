@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solemne Invitación Real</title>
+    <title>Sorpresa Especial</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Old+Standard+TT:ital@0;1&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: var(--dark);
+            background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
             margin: 0;
             height: 100vh;
             display: flex;
@@ -24,7 +24,60 @@
             font-family: 'Old Standard TT', serif;
         }
 
-        /* FONDO DE LIRIOS */
+        /* ESTRELLA INTERACTIVA */
+        .star-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .star-container.hidden {
+            display: none;
+        }
+
+        .star-svg {
+            cursor: pointer;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+            transition: all 0.3s ease;
+        }
+
+        .star-svg:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9));
+        }
+
+        .star-hint {
+            font-family: 'Great Vibes', cursive;
+            color: #f4e4bc;
+            font-size: 1.6rem;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .star-hint::before {
+            content: "~ ";
+            color: var(--gold);
+        }
+
+        .star-hint::after {
+            content: " ~";
+            color: var(--gold);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* FONDO DE ESTRELLAS DORADAS */
         #flower-container {
             position: fixed;
             top: 0;
@@ -35,37 +88,865 @@
             z-index: 0;
         }
 
-        .lily {
+        .sparkle-bg {
             position: absolute;
-            color: white;
-            font-size: 1.5rem;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
             opacity: 0;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8);
-            animation: lilyLife 5s ease-in-out forwards;
+            animation: sparkleLife 4s ease-in-out forwards;
         }
 
-        @keyframes lilyLife {
-            0% { transform: scale(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: scale(1.5) rotate(20deg) translateY(-50px); opacity: 0; }
+        .sparkle-bg::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background: linear-gradient(transparent, var(--gold), transparent);
         }
 
-        /* CONTENEDOR DEL SOBRE */
-        .envelope-wrapper {
+        .sparkle-bg::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -3px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 2px;
+            background: linear-gradient(transparent, var(--gold), transparent);
+        }
+
+        @keyframes sparkleLife {
+            0% { transform: scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            80% { opacity: 0.6; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* CORAZONES QUE APARECEN EN BORDES */
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 4999;
+            opacity: 0;
+            animation: heartFloat 2s ease-out forwards;
+        }
+
+        .heart-particle svg {
+            width: 20px;
+            height: 20px;
+            filter: drop-shadow(0 0 6px rgba(197, 160, 89, 0.8));
+        }
+
+        @keyframes heartFloat {
+            0% { transform: scale(0) translateY(0); opacity: 0; }
+            20% { opacity: 1; transform: scale(1); }
+            100% { transform: scale(0.5) translateY(-80px); opacity: 0; }
+        }
+
+        /* MODAL DE INVITACIÓN */
+        .invitation-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #FDF8E8;
+            padding: 0;
+            z-index: 6000;
+            border-radius: 20px;
+            box-shadow: 
+                0 30px 100px rgba(0,0,0,0.8),
+                0 0 0 5px var(--gold),
+                0 0 0 10px var(--burgundy);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .invitation-modal::-webkit-scrollbar {
+            width: 8px;
+        }
+        .invitation-modal::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        .invitation-modal::-webkit-scrollbar-thumb {
+            background: var(--burgundy);
+            border-radius: 4px;
+        }
+
+        .invitation-modal.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .invitation-header {
+            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
+            padding: 35px 30px 25px;
+            text-align: center;
             position: relative;
-            width: 450px;
-            height: 300px;
-            z-index: 10;
+            border-bottom: 3px solid var(--gold);
         }
 
-        .envelope {
+        .invitation-header h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin: 30px 0 10px 0;
+        }
+
+        .invitation-header .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .invitation-body {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .invitation-body h3 {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--burgundy);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .invitation-details {
+            background: rgba(99, 13, 22, 0.08);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .message-box {
+            width: 100%;
+            min-height: 80px;
+            padding: 15px;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            font-family: 'Old Standard TT', serif;
+            font-size: 1rem;
+            resize: vertical;
+            background: white;
+            color: #333;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .message-box:focus {
+            outline: none;
+            border-color: var(--burgundy);
+            box-shadow: 0 0 10px rgba(99, 13, 22, 0.2);
+        }
+
+        .message-label {
+            display: block;
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--burgundy);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            font-family: 'Old Standard TT', serif;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--burgundy);
+            box-shadow: 0 0 10px rgba(99, 13, 22, 0.2);
+        }
+
+        .invitation-details p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .invitation-details strong {
+            color: var(--burgundy);
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .invitation-activities {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .invitation-activities li {
+            margin: 8px 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .close-invitation-btn {
+            font-family: 'Cinzel Decorative', serif;
+            padding: 12px 40px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 25px;
+            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
+            color: white;
+            box-shadow: 0 6px 20px rgba(99, 13, 22, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .close-invitation-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 13, 22, 0.5);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-action {
+            font-family: 'Cinzel Decorative', serif;
+            padding: 12px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
+            color: white;
+            box-shadow: 0 6px 20px rgba(99, 13, 22, 0.4);
+        }
+
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 13, 22, 0.5);
+        }
+
+        .btn-decline {
+            background: transparent;
+            color: var(--burgundy);
+            border: 2px solid var(--burgundy);
+        }
+
+        .btn-decline:hover {
+            background: rgba(99, 13, 22, 0.1);
+        }
+
+        /* MODAL DE CONFIRMACIÓN */
+        .confirmation-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 400px;
+            background: #FDF8E8;
+            padding: 0;
+            z-index: 7000;
+            border-radius: 20px;
+            box-shadow: 
+                0 30px 100px rgba(0,0,0,0.9),
+                0 0 0 4px var(--gold),
+                0 0 0 8px #2d7a2d;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .confirmation-modal.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .confirmation-header {
+            background: linear-gradient(135deg, #2d7a2d, #1e5a1e);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .confirmation-header h2 {
+            font-family: 'Great Vibes', cursive;
+            color: white;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .confirmation-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .confirmation-body p {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-highlight {
+            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .btn-confirmation {
+            font-family: 'Cinzel Decorative', serif;
+            padding: 12px 40px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 25px;
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-confirmation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+        }
+
+        .loading-send {
+            display: none;
+            color: var(--burgundy);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .error-msg {
+            color: #c0392b;
+            font-size: 0.85rem;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* PANTALLA DE CARTA COMPLETA */
+        .letter-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #0d0d0d 0%, #1a0a1a 50%, #0d0d0d 100%);
+            z-index: 10000;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .letter-screen.show {
+            display: block;
+            animation: fadeInScreen 1s ease-out;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .letter-screen-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .letter-header h1 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 0 0 30px rgba(197, 160, 89, 0.5);
+            animation: glowTitle 3s ease-in-out infinite;
+        }
+
+        @keyframes glowTitle {
+            0%, 100% { text-shadow: 0 0 30px rgba(197, 160, 89, 0.5); }
+            50% { text-shadow: 0 0 50px rgba(197, 160, 89, 0.8), 0 0 80px rgba(197, 160, 89, 0.3); }
+        }
+
+        .letter-date {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.6);
+            font-size: 0.9rem;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .typewriter-container {
+            position: relative;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 15px 15px 0;
+            margin-bottom: 50px;
+        }
+
+        .typewriter-text {
+            font-family: 'Old Standard TT', serif;
+            color: var(--parchment);
+            font-size: 1.1rem;
+            line-height: 2;
+            white-space: pre-wrap;
+            min-height: 200px;
+        }
+
+        .typewriter-text .paragraph {
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .typewriter-text .paragraph.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--gold);
+            margin-left: 2px;
+            animation: cursorBlink 0.8s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes cursorBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* SECCIÓN DE MISTERIO */
+        .mystery-section {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            animation: revealMystery 1.5s ease-out;
+        }
+
+        .mystery-section.show {
+            display: block;
+        }
+
+        @keyframes revealMystery {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mystery-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .mystery-divider::before,
+        .mystery-divider::after {
+            content: "";
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .mystery-heart {
+            width: 30px;
+            height: 30px;
+            fill: var(--gold);
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .mystery-text {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
+        }
+
+        .mystery-hint {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.8);
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        /* CAJA DE REGALO */
+        .gift-box-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 40px auto;
+            perspective: 500px;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: giftFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateY(10deg); }
+        }
+
+        .gift-box-body {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: var(--burgundy);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            z-index: 2;
+            background: linear-gradient(145deg, var(--burgundy), #4d0a11);
+            border-radius: 10px;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.5),
+                inset 0 0 30px rgba(0,0,0,0.3);
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, var(--gold), #d4af37);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .gift-ribbon-h {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(180deg, #d4af37, var(--gold), #d4af37);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+        }
+
+        .gift-bow::before,
+        .gift-bow::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--gold);
+            border-radius: 50% 50% 50% 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .gift-bow::before {
+            left: 0;
+            transform: rotate(-45deg);
+        }
+
+        .gift-bow::after {
+            right: 0;
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        .gift-bow-center {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #f1c40f, var(--gold));
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        }
+
+        .gift-question {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.8);
+            z-index: 10;
+            animation: questionPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes questionPulse {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* CUENTA REGRESIVA */
+        .countdown-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--gold);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(197, 160, 89, 0.1);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px 15px;
+            min-width: 80px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .countdown-number {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--gold);
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
+        }
+
+        .countdown-unit {
+            font-family: 'Old Standard TT', serif;
+            color: var(--parchment);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .countdown-message {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.7);
+            font-size: 0.95rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Botón para volver */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(197, 160, 89, 0.2);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Old Standard TT', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10001;
+        }
+
+        .back-button:hover {
+            background: rgba(197, 160, 89, 0.3);
+            transform: translateX(-5px);
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 5999;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        /* CONTADOR DE CLICKS VISUAL */
+        .click-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 5001;
+        }
+
+        .counter-heart {
+            width: 24px;
+            height: 24px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .counter-heart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .counter-heart.filled svg path {
+            fill: var(--gold);
+            filter: drop-shadow(0 0 8px var(--gold));
+        }
+
+        .counter-heart.filled {
+            transform: scale(1.3);
+            animation: heartPop 0.5s ease-out;
+        }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1.3); }
+        }
+
+        /* ONDA DE LUZ AL HACER CLICK */
+        .light-ring {
+            position: fixed;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            pointer-events: none;
+            z-index: 4998;
+            animation: ringExpand 0.8s ease-out forwards;
+        }
+
+        @keyframes ringExpand {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 200px; height: 200px; opacity: 0; margin-left: -100px; margin-top: -100px; }
+        }
+
+        /* CONTENEDOR DE SORPRESAS */
+        .surprises-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5000;
+            display: none;
+            gap: 50px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .surprises-container.show {
+            display: flex;
+            animation: surprisesReveal 1s ease-out forwards;
+        }
+
+        @keyframes surprisesReveal {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            60% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* CARTA DE AMOR / SOBRE ROMÁNTICO */
+        .love-letter {
+            position: relative;
+            width: 260px;
+            height: 340px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: letterFloat 5s ease-in-out infinite;
+        }
+
+        .love-letter:nth-child(1) { animation-delay: 0s; }
+        .love-letter:nth-child(2) { animation-delay: 2.5s; }
+
+        @keyframes letterFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .love-letter:hover {
+            transform: translateY(-20px) scale(1.08) !important;
+            animation-play-state: paused;
+        }
+
+        /* SOBRE */
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 200px;
+            bottom: 0;
+            background: linear-gradient(145deg, #fdf6e3, #f5e6c8);
+            border-radius: 8px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.4),
+                0 0 30px rgba(197, 160, 89, 0.3),
+                inset 0 -10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
         .envelope::before {
@@ -73,611 +954,138 @@
             position: absolute;
             top: 0;
             left: 0;
-            border-top: 150px solid #4d0a11;
-            border-left: 225px solid transparent;
-            border-right: 225px solid transparent;
-            transform-origin: top;
-            transition: transform 0.8s ease;
-            z-index: 5;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 49%, var(--burgundy) 50%);
+            clip-path: polygon(0 0, 50% 70%, 100% 0);
         }
 
-        .envelope-wrapper.open .envelope::before {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .seal {
+        .envelope::after {
+            content: "";
             position: absolute;
-            top: 120px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, rgba(99, 13, 22, 0.1));
+        }
+
+        /* SELLO DE CERA */
+        .wax-seal {
+            position: absolute;
+            bottom: 70px;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, #f1c40f, #b8860b);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #8b1a1a, var(--burgundy), #4d0a11);
             border-radius: 50%;
-            z-index: 6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.5s;
-        }
-        .seal::after { content: "⚜"; font-size: 40px; color: rgba(0,0,0,0.3); }
-        .envelope-wrapper.open .seal { opacity: 0; transform: translateX(-50%) scale(0); }
-
-        /* CARTA CENTRADA EN TODA LA PANTALLA */
-        .letter {
-            position: fixed; /* Esto la saca del flujo del sobre */
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            background: var(--parchment);
-            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
-            padding: 30px;
-            box-sizing: border-box;
-            border: 1px solid rgba(0,0,0,0.1);
-            z-index: 1;
-            opacity: 0;
-            /* Inicia dentro del sobre y pequeña */
-            transform: translate(-50%, -40%) scale(0.2);
-            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-        }
-
-        .envelope-wrapper.open .letter {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1); /* Centro exacto */
-            z-index: 100;
-            pointer-events: auto;
-            box-shadow: 0 0 100px rgba(0,0,0,0.5), 0 0 20px var(--gold);
-        }
-
-        .letter-border {
-            border: 3px double var(--gold);
-            padding: 25px;
-            text-align: center;
-        }
-
-        h1 { font-family: 'Great Vibes', cursive; color: var(--burgundy); font-size: 2.8rem; margin: 10px 0; }
-        .salutation { font-family: 'Cinzel Decorative', serif; font-size: 0.8rem; color: #444; border-bottom: 1px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; display: inline-block; letter-spacing: 2px; }
-        .body-text { font-size: 1.1rem; color: #222; line-height: 1.5; font-style: italic; }
-        
-        .list-items {
-            list-style: none;
-            padding: 0;
-            font-size: 1rem;
-            margin: 15px 0;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .date-info {
-            font-family: 'Cinzel Decorative';
-            color: var(--burgundy);
-            font-size: 0.8rem;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-
-        /* BOTONES */
-        .btn-container { display: flex; justify-content: center; gap: 15px; }
-        .btn {
-            font-family: 'Cinzel Decorative', serif;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        .btn-accept { background: var(--burgundy); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .btn-decline { background: white; color: #666; border: 1px solid #ccc; }
-        .btn:hover { transform: scale(1.05); }
-
-        /* MODALES */
-        .custom-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 380px;
-            background: linear-gradient(145deg, #fffef9 0%, var(--parchment) 100%);
-            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
-            padding: 0;
-            z-index: 1000;
-            border: none;
-            border-radius: 15px;
-            text-align: center;
             box-shadow: 
-                0 25px 80px rgba(0,0,0,0.5),
-                0 0 0 4px var(--gold),
-                0 0 0 8px var(--burgundy),
-                inset 0 0 30px rgba(197, 160, 89, 0.1);
-            overflow: hidden;
+                0 4px 15px rgba(0,0,0,0.4),
+                inset 0 2px 5px rgba(255,255,255,0.2);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .modal-header {
-            background: var(--burgundy);
-            padding: 20px;
-            position: relative;
-            border-bottom: 2px solid var(--gold);
+        .wax-seal svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--gold);
+            filter: drop-shadow(0 0 3px rgba(197, 160, 89, 0.8));
         }
 
-        .modal-header::before {
-            content: "❖";
+        /* CARTA QUE SALE DEL SOBRE */
+        .letter-card {
             position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5rem;
-            color: var(--gold);
-            background: var(--burgundy);
-            padding: 0 10px;
+            top: 0;
+            left: 10px;
+            right: 10px;
+            height: 220px;
+            background: linear-gradient(180deg, #fff9f0, #fdf6e3);
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.5s ease;
         }
 
-        .modal-header h2 {
+        .love-letter:hover .letter-card {
+            transform: translateY(-15px);
+        }
+
+        .letter-number {
             font-family: 'Great Vibes', cursive;
-            color: var(--gold);
-            font-size: 2rem;
-            margin: 5px 0 0 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 3.5rem;
+            color: var(--burgundy);
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(99, 13, 22, 0.3);
         }
 
-        .modal-header .subtitle {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.85rem;
-            margin-top: 5px;
-            font-style: italic;
-            font-family: 'Old Standard TT', serif;
-        }
-
-        .modal-body {
-            padding: 25px 30px 30px;
-            background: linear-gradient(180deg, #f8f0e0 0%, var(--parchment) 100%);
-        }
-
-        .modal-body p {
-            color: #333;
+        .letter-title {
+            font-family: 'Cinzel Decorative', serif;
             font-size: 1rem;
-            margin-bottom: 15px;
+            color: var(--burgundy);
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .letter-subtitle {
+            font-family: 'Old Standard TT', serif;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+            text-align: center;
             line-height: 1.5;
         }
 
-        .modal-body label {
-            display: block;
-            text-align: left;
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.7rem;
-            color: var(--burgundy);
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(2px);
-            z-index: 999;
-        }
-
-        .input-royal {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--gold);
-            border-radius: 10px;
-            font-family: 'Old Standard TT', serif;
-            font-size: 1rem;
-            margin: 8px 0 15px;
-            box-sizing: border-box;
-            background: rgba(255,255,255,0.95);
-            color: #222;
-            transition: all 0.3s ease;
-        }
-
-        .input-royal:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
-            background: white;
-        }
-
-        .textarea-royal {
-            width: 100%;
-            height: 80px;
-            border: 2px solid var(--gold);
-            border-radius: 10px;
-            padding: 14px 16px;
-            font-family: 'Old Standard TT', serif;
-            font-size: 1rem;
-            box-sizing: border-box;
-            background: rgba(255,255,255,0.95);
-            color: #222;
-            resize: none;
-            transition: all 0.3s ease;
-            margin: 8px 0;
-        }
-
-        .textarea-royal:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
-            background: white;
-        }
-
-        .btn-royal {
-            font-family: 'Cinzel Decorative', serif;
-            padding: 14px 35px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 30px;
-            background: linear-gradient(135deg, var(--burgundy) 0%, #4d0a11 100%);
-            color: white;
-            box-shadow: 0 6px 20px rgba(99, 13, 22, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            letter-spacing: 1px;
-        }
-
-        .btn-royal:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(99, 13, 22, 0.5);
-        }
-
-        .btn-royal:active {
-            transform: translateY(0);
-        }
-
-        .btn-royal.btn-secondary {
-            background: transparent;
-            color: var(--burgundy);
-            border: 2px solid var(--burgundy);
-            box-shadow: none;
-        }
-
-        .btn-royal.btn-secondary:hover {
-            background: rgba(99, 13, 22, 0.1);
-            box-shadow: none;
-        }
-
-        .success-msg {
-            color: #2d7a2d;
-            font-weight: bold;
-            display: none;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(45, 122, 45, 0.1);
-            border-radius: 8px;
-        }
-
-        .error-msg {
-            color: #c0392b;
-            font-size: 0.85rem;
-            display: none;
-            margin-top: 5px;
-            padding: 8px;
-            background: rgba(192, 57, 43, 0.1);
-            border-radius: 5px;
-        }
-
-        .loading {
-            display: none;
-            color: var(--burgundy);
-            font-style: italic;
-            margin-top: 10px;
-        }
-
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 20px 0;
-            opacity: 0.5;
-        }
-
-        .icon-input {
-            position: relative;
-        }
-
-        .icon-input::before {
+        .letter-ribbon {
             position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-            opacity: 0.5;
-        }
-
-        .decorative-corner {
-            position: absolute;
+            top: -10px;
+            right: 20px;
             width: 30px;
-            height: 30px;
-            border: 2px solid var(--gold);
-            opacity: 0.6;
+            height: 50px;
+            background: linear-gradient(90deg, var(--gold), #d4af37);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
-        .corner-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-        .corner-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
-        .corner-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
-        .corner-br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
-
-        /* Input de teléfono con prefijo */
-        .phone-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            margin: 8px 0 15px;
-        }
-
-        .phone-prefix {
-            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
-            color: white;
-            padding: 14px 12px;
-            border: 2px solid var(--gold);
-            border-right: none;
-            border-radius: 10px 0 0 10px;
-            font-family: 'Old Standard TT', serif;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .phone-input {
-            flex: 1;
-            padding: 14px 16px;
-            border: 2px solid var(--gold);
-            border-left: none;
-            border-radius: 0 10px 10px 0;
-            font-family: 'Old Standard TT', serif;
-            font-size: 1rem;
-            background: rgba(255,255,255,0.95);
-            color: #222;
-            transition: all 0.3s ease;
-        }
-
-        .phone-input:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
-            background: white;
-        }
-
-        /* Modal de éxito personalizado */
-        .success-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 360px;
-            background: linear-gradient(145deg, #fffef9 0%, var(--parchment) 100%);
-            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
-            z-index: 1001;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 
-                0 25px 80px rgba(0,0,0,0.6),
-                0 0 0 4px var(--gold),
-                0 0 0 8px var(--burgundy);
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .success-modal.show {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .success-modal-header {
-            background: linear-gradient(135deg, #2d7a2d, #1e5a1e);
-            padding: 25px 20px;
-            position: relative;
-        }
-
-        .success-modal-header::before {
-            content: "";
+        /* DECORACIÓN DEL SOBRE */
+        .envelope-decoration {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
-        }
-
-        .success-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .success-modal-header h2 {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
             font-family: 'Great Vibes', cursive;
-            color: white;
-            font-size: 2rem;
-            margin: 0;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .success-modal-body {
-            padding: 30px 25px;
-            background: linear-gradient(180deg, #f8f0e0 0%, var(--parchment) 100%);
-        }
-
-        .success-modal-body p {
-            color: #333;
-            font-size: 1.05rem;
-            margin: 0 0 15px;
-            line-height: 1.6;
-        }
-
-        .success-modal-body .highlight {
-            background: linear-gradient(135deg, var(--burgundy), #4d0a11);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-
-        .success-modal-body .date-text {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: var(--burgundy);
+            opacity: 0.7;
         }
 
-        .btn-close-success {
-            font-family: 'Cinzel Decorative', serif;
-            padding: 12px 40px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 25px;
-            background: linear-gradient(135deg, var(--gold), #b8860b);
-            color: #333;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-
-        .btn-close-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
-        }
-
-        /* Pantalla de lirios final */
-        .lily-field {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #1a0a0d 0%, #2d1518 30%, #3d1f23 60%, #4a2830 100%);
-            z-index: 2000;
-            display: none;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-            overflow: hidden;
-        }
-
-        .lily-field.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .lily-field-flower {
+        /* BRILLOS EN LAS CARTAS */
+        .letter-sparkle {
             position: absolute;
-            font-size: 2rem;
-            animation: lilyFloat 4s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-            filter: drop-shadow(0 0 10px rgba(255,200,200,0.3));
-        }
-
-        @keyframes lilyFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-15px) rotate(5deg); }
-            50% { transform: translateY(-5px) rotate(-3deg); }
-            75% { transform: translateY(-20px) rotate(3deg); }
-        }
-
-        .lily-field-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-            animation: fadeInUp 2s ease forwards;
-            animation-delay: 1s;
-            opacity: 0;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -40%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        .lily-field-content h1 {
-            font-family: 'Great Vibes', cursive;
-            color: #f4e4bc;
-            font-size: 4rem;
-            margin: 0;
-            text-shadow: 0 0 30px rgba(197, 160, 89, 0.5);
-        }
-
-        .lily-field-content p {
-            font-family: 'Old Standard TT', serif;
-            color: rgba(255,255,255,0.85);
-            font-size: 1.3rem;
-            margin-top: 20px;
-            font-style: italic;
-        }
-
-        .lily-field-content .date-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), #b8860b);
-            color: #1a0a0d;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.9rem;
-            margin-top: 30px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .lily-field-content .heart-line {
-            font-size: 2rem;
-            margin-top: 25px;
-            animation: heartBeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        /* Partículas brillantes */
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
             border-radius: 50%;
-            animation: sparkleAnim 3s ease-in-out infinite;
+            opacity: 0;
+            animation: letterSparkle 3s ease-in-out infinite;
         }
 
-        @keyframes sparkleAnim {
+        .letter-sparkle:nth-child(1) { top: 30px; left: 20px; animation-delay: 0s; }
+        .letter-sparkle:nth-child(2) { top: 50px; right: 30px; animation-delay: 1s; }
+        .letter-sparkle:nth-child(3) { bottom: 120px; left: 40px; animation-delay: 2s; }
+
+        @keyframes letterSparkle {
             0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Para el rechazo */
-        .lily-field.declined {
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-        }
-
-        .lily-field.declined .lily-field-content h1 {
-            color: #a8d8ea;
-        }
-
-        .lily-field.declined .date-badge {
-            background: linear-gradient(135deg, #a8d8ea, #7ec8e3);
+            50% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--gold); }
         }
     </style>
 </head>
@@ -685,298 +1093,448 @@
 
     <div id="flower-container"></div>
 
-    <div class="envelope-wrapper" id="env" onclick="openLetter()">
-        <div class="seal"></div>
-        <div class="envelope"></div>
+    <!-- ESTRELLA INTERACTIVA -->
+    <div class="star-container" id="starContainer">
+        <svg class="star-svg" id="starSvg" width="200" height="200" viewBox="0 0 100 100" onclick="clickStar()">
+            <defs>
+                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path id="starOutline" 
+                  d="M 50 10 L 61 38 L 90 38 L 68 54 L 78 82 L 50 65 L 22 82 L 32 54 L 10 38 L 39 38 Z" 
+                  stroke="#FFD700" 
+                  stroke-width="2" 
+                  fill="none"/>
+            <path id="starFill" 
+                  d="M 50 10 L 61 38 L 90 38 L 68 54 L 78 82 L 50 65 L 22 82 L 32 54 L 10 38 L 39 38 Z" 
+                  fill="url(#goldGradient)" 
+                  style="clip-path: inset(100% 0 0 0); transition: clip-path 0.5s ease;"/>
+        </svg>
+        <div class="star-hint">Haz click en la estrella</div>
+    </div>
+
+    <!-- CONTENEDOR DE SORPRESAS -->
+    <div class="surprises-container" id="lilyCapsules">
+        <div class="love-letter" onclick="openInvitation()">
+            <div class="letter-sparkle"></div>
+            <div class="letter-sparkle"></div>
+            <div class="letter-sparkle"></div>
+            <div class="letter-card">
+                <div class="letter-ribbon"></div>
+                <div class="letter-number">1</div>
+                <div class="letter-title">SORPRESA</div>
+                <div class="letter-subtitle">Una invitacion especial<br>te espera aqui dentro...</div>
+            </div>
+            <div class="envelope">
+                <div class="wax-seal">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="envelope-decoration">Para ti, con amor</div>
+            </div>
+        </div>
+
+        <div class="love-letter" onclick="openLoading()">
+            <div class="letter-sparkle"></div>
+            <div class="letter-sparkle"></div>
+            <div class="letter-sparkle"></div>
+            <div class="letter-card">
+                <div class="letter-ribbon"></div>
+                <div class="letter-number">2</div>
+                <div class="letter-title">SORPRESA</div>
+                <div class="letter-subtitle">Algo maravilloso<br>esta por venir...</div>
+            </div>
+            <div class="envelope">
+                <div class="wax-seal">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="envelope-decoration">Un secreto especial</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTADOR DE CORAZONES -->
+    <div class="click-counter" id="clickCounter">
+        <div class="counter-heart" data-index="1">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#c5a059" stroke-width="2"/></svg>
+        </div>
+        <div class="counter-heart" data-index="2">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#c5a059" stroke-width="2"/></svg>
+        </div>
+        <div class="counter-heart" data-index="3">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#c5a059" stroke-width="2"/></svg>
+        </div>
+        <div class="counter-heart" data-index="4">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#c5a059" stroke-width="2"/></svg>
+        </div>
+        <div class="counter-heart" data-index="5">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#c5a059" stroke-width="2"/></svg>
+        </div>
+    </div>
+
+    <!-- MODAL DE INVITACIÓN -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    
+    <div class="invitation-modal" id="invitationModal">
+        <div class="invitation-header">
+            <h2>¡Estás Invitada!</h2>
+            <p class="subtitle">Una aventura especial te espera</p>
+        </div>
         
-        <div class="letter" id="letter">
-            <div class="letter-border">
-                <div class="salutation">Solemne Comunicado Real</div>
-                <h1>Bellísima Mabel</h1>
+        <div class="invitation-body">
+            <h3>Día Mágico de Aventuras</h3>
+            
+            <div class="invitation-details">
+                <p><strong>Fecha:</strong> Viernes 2 de Enero, 2026</p>
+                <p><strong>Horario:</strong> 10:00 AM - 4:00 PM</p>
                 
-                <p class="body-text">
-                    Es para este humilde caballero un honor inefable y privilegio extraordinario solicitar vuestra distinguida y encantadora presencia para una velada especial:
-                </p>
-                
-                <ul class="list-items">
-                    <li>Exquisito Banquete de Makis </li>
-                    <li>Aventura de Construcción de Legos</li>
-                    <li>Paseo por la Epoca Navideña</li>
+                <h4 style="color: var(--burgundy); margin-top: 20px; font-family: 'Cinzel Decorative', serif;">El Plan:</h4>
+                <ul class="invitation-activities">
+                    <li>Delicioso almuerzo en un lugar histórico</li>
+                    <li>Visita cultural al museo</li>
+                    <li>Un lugar donde la ciencia cobra vida y los sueños se hacen realidad</li>
+                    <li>¡Muchas sorpresas más!</li>
                 </ul>
+            </div>
+            
+            <p style="font-style: italic; color: #555; font-size: 0.95rem; margin-bottom: 15px;">
+                Un día lleno de diversión, cultura y momentos inolvidables juntos
+            </p>
 
-                <div class="date-info">
-                    MARTES, 23 DE DICIEMBRE | 16:00 - 18:00 HRS
+            <label class="message-label">Deja unas palabritas para Maycol:</label>
+            <textarea id="guestMessage" class="message-box" placeholder="Escribe aquí algo bonito para él..."></textarea>
+            
+            <p class="loading-send" id="loadingSend">Enviando respuesta...</p>
+            
+            <div class="btn-container">
+                <button class="btn-action btn-accept" onclick="acceptInvitation()">ACEPTAR</button>
+                <button class="btn-action btn-decline" onclick="declineInvitation()">DECLINAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-header">
+            <h2>¡Confirmado!</h2>
+        </div>
+        <div class="confirmation-body">
+            <p>Tu respuesta ha sido enviada exitosamente.</p>
+            <div class="confirmation-highlight">
+                <div style="font-size: 0.85rem;">NOS VEMOS EL</div>
+                <div style="font-size: 1.2rem; margin-top: 5px;">Viernes 2 de Enero, 2026</div>
+                <div style="margin-top: 5px; opacity: 0.9;">10:00 AM - 4:00 PM</div>
+            </div>
+            <p style="font-style: italic; color: #666;">Revisa tu correo para más detalles</p>
+            <button class="btn-confirmation" onclick="closeConfirmation()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE CARTA ROMÁNTICA -->
+    <div class="letter-screen" id="letterScreen">
+        <button class="back-button" onclick="closeLetterScreen()">Volver</button>
+        
+        <div class="letter-screen-content">
+            <div class="letter-header">
+                <h1>Para ti...</h1>
+                <p class="letter-date">31 de Diciembre, 2025</p>
+            </div>
+
+            <div class="typewriter-container">
+                <div class="typewriter-text" id="typewriterText"></div>
+            </div>
+
+            <div class="mystery-section" id="mysterySection">
+                <div class="mystery-divider">
+                    <svg class="mystery-heart" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
                 </div>
 
-                <p class="body-text" style="font-size: 0.95rem; margin-top: 10px;">
-                    Este caballero aguarda vuestra respuesta... Bobita
+                <p class="mystery-text">Pero hay algo mas...</p>
+                <p class="mystery-hint">
+                    Hay palabras que aun no he dicho,<br>
+                    sentimientos que esperan su momento perfecto.<br>
+                    Dentro de esta caja hay algo que cambiara todo...
                 </p>
 
-                <div class="btn-container">
-                    <button class="btn btn-accept" onclick="showBooking(event)">ACEPTAR</button>
-                    <button class="btn btn-decline" onclick="confirmDecline(event)">DECLINAR</button>
+                <div class="gift-box-container">
+                    <div class="gift-box">
+                        <div class="gift-box-body">
+                            <div class="gift-ribbon-v"></div>
+                            <div class="gift-ribbon-h"></div>
+                        </div>
+                        <div class="gift-bow">
+                            <div class="gift-bow-center"></div>
+                        </div>
+                        <span class="gift-question">?</span>
+                    </div>
+                </div>
+
+                <div class="countdown-section">
+                    <p class="countdown-label">Se revelara en</p>
+                    <div class="countdown-timer" id="countdownTimer">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countDays">00</div>
+                            <div class="countdown-unit">Dias</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countHours">00</div>
+                            <div class="countdown-unit">Horas</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countMinutes">00</div>
+                            <div class="countdown-unit">Min</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countSeconds">00</div>
+                            <div class="countdown-unit">Seg</div>
+                        </div>
+                    </div>
+                    <p class="countdown-message">Viernes 2 de Enero, 2026 - 12:30 PM</p>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="overlay"></div>
-
-    <div class="custom-modal" id="modal-booking">
-        <div class="decorative-corner corner-tl"></div>
-        <div class="decorative-corner corner-tr"></div>
-        <div class="decorative-corner corner-bl"></div>
-        <div class="decorative-corner corner-br"></div>
-        
-        <div class="modal-header">
-            <h2>Reserva Real</h2>
-            <p class="subtitle">La cita ha sido agendada</p>
-        </div>
-        
-        <div class="modal-body">
-            <p>Por favor, ingresa tus datos para confirmar la reserva:</p>
-            
-            <label for="guest-email">CORREO ELECTRONICO</label>
-            <input type="email" id="guest-email" class="input-royal" placeholder="tu.correo@ejemplo.com" required>
-            
-            <div class="divider"></div>
-            
-            <label for="final-msg">MENSAJE PARA MAYCOL</label>
-            <textarea id="final-msg" class="textarea-royal" placeholder="Escribe aqui tu mensaje..."></textarea>
-            
-            <p class="error-msg" id="error-accept">Por favor ingresa datos validos</p>
-            <p class="loading" id="loading-accept">Enviando misiva...</p>
-            <p class="success-msg" id="success-accept">Reserva confirmada con exito</p>
-            
-            <button class="btn-royal" onclick="sendAcceptEmail()">CONFIRMAR RESERVA</button>
-        </div>
-    </div>
-
-    <div class="custom-modal" id="modal-decline">
-        <div class="decorative-corner corner-tl"></div>
-        <div class="decorative-corner corner-tr"></div>
-        <div class="decorative-corner corner-bl"></div>
-        <div class="decorative-corner corner-br"></div>
-        
-        <div class="modal-header">
-            <h2>¿Está Segura?</h2>
-            <p class="subtitle">Un momento de reflexión</p>
-        </div>
-        
-        <div class="modal-body">
-            <p>El caballero se ha preparado con mucho esmero y cariño para esta velada especial...</p>
-            <p style="font-size: 0.9rem; color: #666; font-style: italic;">Los makis esperan, los legos aguardan, y el corazón del caballero late con esperanza.</p>
-            
-            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
-                <button class="btn-royal" onclick="closeDecline()">RECONSIDERAR</button>
-                <button class="btn-royal btn-secondary" onclick="showDeclineReason()">DECLINAR</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="custom-modal" id="modal-decline-reason">
-        <div class="decorative-corner corner-tl"></div>
-        <div class="decorative-corner corner-tr"></div>
-        <div class="decorative-corner corner-bl"></div>
-        <div class="decorative-corner corner-br"></div>
-        
-        <div class="modal-header">
-            <h2>Entendido</h2>
-            <p class="subtitle">Gracias por responder</p>
-        </div>
-        
-        <div class="modal-body">
-            <label for="decline-reason">TU MENSAJE</label>
-            <textarea id="decline-reason" class="textarea-royal" placeholder="Si lo deseas, puedes dejar un mensaje..."></textarea>
-            
-            <p class="loading" id="loading-decline">Enviando respuesta...</p>
-            <p class="success-msg" id="success-decline">Mensaje enviado. Gracias por responder.</p>
-            
-            <button class="btn-royal btn-secondary" onclick="sendDeclineEmail()">CONFIRMAR</button>
-        </div>
-    </div>
-
-    <!-- Modal de éxito personalizado -->
-    <div class="success-modal" id="success-modal">
-        <div class="success-modal-header">
-            <div class="success-icon">💝</div>
-            <h2>Reserva Confirmada</h2>
-        </div>
-        <div class="success-modal-body">
-            <p style="font-size: 1.1rem; color: #333;">Revisa tu <strong>correo</strong> y tu <strong>celular</strong> para ver la confirmacion</p>
-            
-            <div class="highlight">
-                <div class="date-text">NOS VEMOS EL</div>
-                <div style="font-size: 1.3rem; margin-top: 5px;">Martes 23 de Diciembre</div>
-                <div style="margin-top: 5px; opacity: 0.9;">4:00 PM - 6:00 PM</div>
-            </div>
-            
-            <p style="font-style: italic; color: #666; font-size: 0.95rem;">Te espera una tarde increible con makis, legos y un paseo navideno</p>
-            
-            <button class="btn-close-success" onclick="showLilyField('accept')">ENTENDIDO</button>
-        </div>
-    </div>
-
-    <!-- Campo de lirios final -->
-    <div class="lily-field" id="lily-field">
-        <div class="lily-field-content" id="lily-content">
-            <h1>Nos Vemos Pronto</h1>
-            <p>Una tarde magica te espera...</p>
-            <div class="date-badge">MARTES 23 DE DICIEMBRE</div>
-            <div class="heart-line">💕</div>
         </div>
     </div>
 
     <script>
-        const YOUR_EMAIL = 'maycoljhordan07@gmail.com';
-        
-        // URL de la función de Netlify (cambiar cuando esté desplegado)
-        const API_URL = '/.netlify/functions/send-email';
+        let clickCount = 0;
+        const maxClicks = 5;
 
-        function openLetter() {
-            const wrapper = document.getElementById('env');
-            if (!wrapper.classList.contains('open')) {
-                wrapper.classList.add('open');
-                setInterval(createLily, 400);
-            }
-        }
+        // Crear brillos dorados de fondo
+        setInterval(createSparkle, 600);
 
-        function createLily() {
+        function createSparkle() {
             const container = document.getElementById('flower-container');
-            const lily = document.createElement('div');
-            lily.className = 'lily';
-            lily.innerHTML = '❀';
-            lily.style.left = Math.random() * 95 + 'vw';
-            lily.style.top = Math.random() * 95 + 'vh';
-            container.appendChild(lily);
-            setTimeout(() => lily.remove(), 5000);
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle-bg';
+            sparkle.style.left = Math.random() * 95 + 'vw';
+            sparkle.style.top = Math.random() * 95 + 'vh';
+            container.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 4000);
         }
 
-        function showBooking(e) {
-            e.stopPropagation();
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('modal-booking').style.display = 'block';
-        }
-
-        function confirmDecline(e) {
-            e.stopPropagation();
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('modal-decline').style.display = 'block';
-        }
-
-        function closeDecline() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('modal-decline').style.display = 'none';
-        }
-
-        function showDeclineReason() {
-            document.getElementById('modal-decline').style.display = 'none';
-            document.getElementById('modal-decline-reason').style.display = 'block';
-        }
-
-        function showSuccessModal() {
-            document.getElementById('modal-booking').style.display = 'none';
-            document.getElementById('success-modal').classList.add('show');
-        }
-
-        function closeSuccessModal() {
-            document.getElementById('success-modal').classList.remove('show');
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function showLilyField(type) {
-            // Cerrar modales
-            document.getElementById('success-modal').classList.remove('show');
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('modal-decline-reason').style.display = 'none';
+        // Crear corazones en los bordes de la pantalla
+        function createHeartParticles() {
+            const positions = [
+                { x: '5%', y: Math.random() * 100 + '%' },
+                { x: '95%', y: Math.random() * 100 + '%' },
+                { x: Math.random() * 100 + '%', y: '5%' },
+                { x: Math.random() * 100 + '%', y: '95%' }
+            ];
             
-            const lilyField = document.getElementById('lily-field');
-            const lilyContent = document.getElementById('lily-content');
-            
-            // Cambiar contenido según aceptó o rechazó
-            if (type === 'accept') {
-                lilyContent.innerHTML = `
-                    <h1>Nos Vemos Pronto</h1>
-                    <p>Una tarde magica te espera...</p>
-                    <div class="date-badge">MARTES 23 DE DICIEMBRE | 4-6 PM</div>
-                    <div class="heart-line">💕</div>
-                `;
-                lilyField.classList.remove('declined');
-            } else {
-                lilyContent.innerHTML = `
-                    <h1>Gracias por Responder</h1>
-                    <p>Quiza en otra ocasion...</p>
-                    <div class="date-badge">HASTA PRONTO</div>
-                    <div class="heart-line">🌸</div>
-                `;
-                lilyField.classList.add('declined');
-            }
-            
-            // Mostrar campo de lirios
-            lilyField.classList.add('show');
-            
-            // Crear lirios flotantes
-            createLilyField();
-            
-            // Crear partículas brillantes
-            createSparkles();
-        }
-
-        function createLilyField() {
-            const lilyField = document.getElementById('lily-field');
-            const flowers = ['🌸', '🌺', '💮', '🪷'];
-            
-            // Crear muchos lirios
-            for (let i = 0; i < 50; i++) {
-                const flower = document.createElement('div');
-                flower.className = 'lily-field-flower';
-                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-                flower.style.left = Math.random() * 100 + 'vw';
-                flower.style.top = Math.random() * 100 + 'vh';
-                flower.style.fontSize = (1 + Math.random() * 2) + 'rem';
-                flower.style.animationDelay = Math.random() * 4 + 's';
-                flower.style.opacity = 0.3 + Math.random() * 0.5;
-                lilyField.appendChild(flower);
+            for (let i = 0; i < 4; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#c5a059"/></svg>';
+                heart.style.left = positions[i].x;
+                heart.style.top = positions[i].y;
+                heart.style.animationDelay = (i * 0.15) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
             }
         }
 
-        function createSparkles() {
-            const lilyField = document.getElementById('lily-field');
+        // Crear onda de luz alrededor de la estrella
+        function createLightRing() {
+            const starContainer = document.getElementById('starContainer');
+            const rect = starContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const ring = document.createElement('div');
+            ring.className = 'light-ring';
+            ring.style.left = centerX + 'px';
+            ring.style.top = centerY + 'px';
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 800);
+        }
+
+        function clickStar() {
+            clickCount++;
             
-            for (let i = 0; i < 30; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + 'vw';
-                sparkle.style.top = Math.random() * 100 + 'vh';
-                sparkle.style.animationDelay = Math.random() * 3 + 's';
-                lilyField.appendChild(sparkle);
+            // Crear onda de luz elegante
+            createLightRing();
+            
+            // Crear corazones en los bordes
+            createHeartParticles();
+            
+            // Llenar corazon del contador
+            const hearts = document.querySelectorAll('.counter-heart');
+            if (clickCount <= maxClicks) {
+                hearts[clickCount - 1].classList.add('filled');
+            }
+            
+            // Calcular el porcentaje de relleno
+            const fillPercentage = (clickCount / maxClicks) * 100;
+            const starFill = document.getElementById('starFill');
+            
+            // Animar el relleno de la estrella
+            starFill.style.clipPath = `inset(${100 - fillPercentage}% 0 0 0)`;
+            
+            // Efecto de animación en el click
+            const starSvg = document.getElementById('starSvg');
+            starSvg.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                starSvg.style.transform = 'scale(1)';
+            }, 200);
+            
+            // Cuando se completan los 5 clicks
+            if (clickCount >= maxClicks) {
+                setTimeout(() => {
+                    // Ocultar la estrella y contador
+                    document.getElementById('starContainer').classList.add('hidden');
+                    document.getElementById('clickCounter').style.display = 'none';
+                    
+                    // Mostrar las cartas de sorpresa
+                    document.getElementById('lilyCapsules').classList.add('show');
+                }, 500);
             }
         }
 
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+        function openInvitation() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('invitationModal').classList.add('show');
         }
 
-        async function sendAcceptEmail() {
-            const guestEmail = document.getElementById('guest-email').value.trim();
-            const message = document.getElementById('final-msg').value.trim();
-            const errorEl = document.getElementById('error-accept');
-            const loadingEl = document.getElementById('loading-accept');
-            const successEl = document.getElementById('success-accept');
-            const btn = document.querySelector('#modal-booking .btn-royal');
+        function closeInvitation() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('invitationModal').classList.remove('show');
+        }
 
-            // Validar email
-            if (!validateEmail(guestEmail)) {
-                errorEl.textContent = 'Por favor ingresa un correo valido';
-                errorEl.style.display = 'block';
+        function openLoading() {
+            // Abrir pantalla de carta romántica
+            document.getElementById('letterScreen').classList.add('show');
+            startTypewriter();
+            startCountdown();
+        }
+
+        function closeLetterScreen() {
+            document.getElementById('letterScreen').classList.remove('show');
+        }
+
+        // TEXTO DE LA CARTA
+        const letterParagraphs = [
+            "Desde que te conoci senti algo distinto. No fue inmediato ni ruidoso, fue mas bien una calma extraña, como cuando algo encaja sin avisar. Una conexion silenciosa, pero firme, de esas que no se fuerzan... simplemente ocurren.",
+            
+            "Me gusta como eres. Como sientes. Como piensas.\nMe gusta la forma en que tus emociones se reflejan en tus gestos, incluso cuando no dices nada. Hay verdad en ti, y eso no es comun.",
+            
+            "Adoro tu cabello, no solo por su color, que parece guardar los tonos del atardecer, sino porque en el hay una suavidad que habla de ti, de tu ternura y tu caracter.\nTus ojos... tus ojos tienen algo que no se explica facil: mirarlos es sentir que hay profundidad, historia, sensibilidad. No miran vacio, miran con intencion.",
+            
+            "Me gusta como reaccionas al mundo, como te ries, como te preocupas, como te cuidas y cuidas a los tuyos. Me gusta tu manera de ser mujer: autentica, fuerte y dulce al mismo tiempo.",
+            
+            "No escribo esto por impulso. Lo escribo porque lo siento.\nPorque lo que ha nacido entre nosotros no es casualidad ni costumbre. Es presencia. Es interes real. Es cariño que crece con cada conversacion, con cada silencio compartido.",
+            
+            "Hoy escribo esta carta virtual no para prometer nada que el tiempo no pueda sostener, sino para dejar constancia de algo verdadero:\nme importas, me inspiras y ocupas un lugar especial en mi pensamiento y en mi corazón.",
+            
+            "Hay cosas que aun no dire aqui.\nNo porque no las sienta, sino porque algunas palabras merecen su momento exacto.",
+            
+            "Por ahora, quedate con esto:\nlo que siento por ti es real, profundo y va en serio."
+        ];
+
+        let currentParagraph = 0;
+        let currentChar = 0;
+        let typewriterInterval;
+
+        function startTypewriter() {
+            const container = document.getElementById('typewriterText');
+            container.innerHTML = '';
+            currentParagraph = 0;
+            currentChar = 0;
+            
+            typeNextParagraph();
+        }
+
+        function typeNextParagraph() {
+            if (currentParagraph >= letterParagraphs.length) {
+                // Mostrar sección de misterio cuando termine
+                setTimeout(() => {
+                    document.getElementById('mysterySection').classList.add('show');
+                }, 1000);
                 return;
             }
-            
-            errorEl.style.display = 'none';
+
+            const container = document.getElementById('typewriterText');
+            const paragraph = document.createElement('div');
+            paragraph.className = 'paragraph';
+            container.appendChild(paragraph);
+
+            // Hacer visible con animación
+            setTimeout(() => paragraph.classList.add('visible'), 100);
+
+            const text = letterParagraphs[currentParagraph];
+            currentChar = 0;
+
+            typewriterInterval = setInterval(() => {
+                if (currentChar < text.length) {
+                    const char = text[currentChar];
+                    if (char === '\n') {
+                        paragraph.innerHTML += '<br>';
+                    } else {
+                        paragraph.innerHTML += char;
+                    }
+                    currentChar++;
+
+                    // Auto-scroll
+                    container.scrollTop = container.scrollHeight;
+                } else {
+                    clearInterval(typewriterInterval);
+                    currentParagraph++;
+                    
+                    // Esperar antes del siguiente párrafo
+                    setTimeout(typeNextParagraph, 1500);
+                }
+            }, 35); // Velocidad de escritura
+        }
+
+        // CUENTA REGRESIVA
+        function startCountdown() {
+            // Fecha objetivo: Viernes 2 de Enero 2026 a las 12:30 PM (hora de Perú)
+            const targetDate = new Date('2026-01-02T12:30:00-05:00');
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    // Tiempo terminado
+                    document.getElementById('countDays').textContent = '00';
+                    document.getElementById('countHours').textContent = '00';
+                    document.getElementById('countMinutes').textContent = '00';
+                    document.getElementById('countSeconds').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('countDays').textContent = days.toString().padStart(2, '0');
+                document.getElementById('countHours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('countMinutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('countSeconds').textContent = seconds.toString().padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Cerrar modales al hacer click en el overlay
+        document.getElementById('modalOverlay').addEventListener('click', function() {
+            closeInvitation();
+            document.getElementById('modalOverlay').classList.remove('show');
+        });
+
+        const YOUR_EMAIL = 'maycoljhordan07@gmail.com';
+        const API_URL = '/.netlify/functions/send-email';
+
+        async function acceptInvitation() {
+            const message = document.getElementById('guestMessage').value.trim();
+            const loadingEl = document.getElementById('loadingSend');
+
             loadingEl.style.display = 'block';
-            btn.disabled = true;
-            btn.style.opacity = '0.6';
 
             try {
                 const response = await fetch(API_URL, {
@@ -984,8 +1542,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         tipo: 'aceptar',
-                        guestEmail: guestEmail,
-                        mensaje: message
+                        mensaje: message,
+                        evento: 'Día Mágico de Aventuras - 2 de Enero 2026'
                     })
                 });
 
@@ -993,34 +1551,29 @@
                 loadingEl.style.display = 'none';
 
                 if (result.success) {
-                    successEl.style.display = 'block';
-                    setTimeout(() => {
-                        showSuccessModal();
-                    }, 500);
+                    closeInvitation();
+                    showConfirmation();
                 } else {
                     throw new Error(result.error);
                 }
             } catch (error) {
                 console.error('Error:', error);
                 loadingEl.style.display = 'none';
-                
-                // Fallback a mailto
-                const subject = 'MABEL HA ACEPTADO LA INVITACION';
-                const body = `Mabel ha ACEPTADO la invitacion!\n\nFecha: MARTES, 23 DE DICIEMBRE | 16:00 - 18:00 HRS\nCorreo: ${guestEmail}\nTelefono: ${phoneFormatted}\nMensaje: ${message || '(Sin mensaje)'}`;
-                window.location.href = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                successEl.style.display = 'block';
+                // Fallback: mostrar confirmación de todas formas
+                closeInvitation();
+                showConfirmation();
             }
         }
 
-        async function sendDeclineEmail() {
-            const reason = document.getElementById('decline-reason').value.trim();
-            const loadingEl = document.getElementById('loading-decline');
-            const successEl = document.getElementById('success-decline');
-            const btn = document.querySelector('#modal-decline-reason .btn-royal');
+        async function declineInvitation() {
+            const message = document.getElementById('guestMessage').value.trim();
+            const loadingEl = document.getElementById('loadingSend');
+
+            if (!confirm("¿Estás segura de que deseas declinar esta aventura?")) {
+                return;
+            }
 
             loadingEl.style.display = 'block';
-            btn.disabled = true;
-            btn.style.opacity = '0.6';
 
             try {
                 const response = await fetch(API_URL, {
@@ -1028,33 +1581,30 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         tipo: 'declinar',
-                        guestEmail: '',
-                        mensaje: reason
+                        mensaje: message,
+                        evento: 'Día Mágico de Aventuras - 2 de Enero 2026'
                     })
                 });
 
-                const result = await response.json();
                 loadingEl.style.display = 'none';
-
-                if (result.success) {
-                    successEl.style.display = 'block';
-                    setTimeout(() => {
-                        showLilyField('decline');
-                    }, 1000);
-                } else {
-                    throw new Error(result.error);
-                }
+                closeInvitation();
+                alert('Tu respuesta ha sido enviada. Quizás en otra ocasión.');
             } catch (error) {
                 console.error('Error:', error);
                 loadingEl.style.display = 'none';
-                
-                // Fallback a mailto
-                const subject = 'Mabel ha declinado la invitacion';
-                const body = `Mabel ha declinado la invitacion.\n\nMensaje: ${reason || '(Sin mensaje)'}`;
-                window.location.href = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                successEl.style.display = 'block';
-                setTimeout(() => showLilyField('decline'), 1000);
+                closeInvitation();
+                alert('Entendido. Quizás en otra ocasión.');
             }
+        }
+
+        function showConfirmation() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('confirmationModal').classList.add('show');
+        }
+
+        function closeConfirmation() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('confirmationModal').classList.remove('show');
         }
     </script>
 </body>
