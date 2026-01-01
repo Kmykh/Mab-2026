@@ -25,8 +25,8 @@ exports.handler = async (event, context) => {
 
     const TU_EMAIL = 'maycoljhordan07@gmail.com';
     const TU_NUMERO = '+51932387692';
-    const CORREO_MABEL = 'maycoljhordan07@gmail.com'; // Cambiar por el de Mabel después
-    const NUMERO_MABEL = '+51932387692'; // Cambiar por el de Mabel después
+    const CORREO_MABEL = 'mabelmiraval2019@gmail.com'; // Cambiar por el de Mabel después
+    const NUMERO_MABEL = '+51999234643'; // Cambiar por el de Mabel después
 
     // Configurar Gmail
     const transporter = nodemailer.createTransport({
