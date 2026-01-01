@@ -1087,6 +1087,218 @@
             0%, 100% { opacity: 0; transform: scale(0); }
             50% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--gold); }
         }
+
+        /* PREGUNTA ROMANTICA 2026 */
+        .romantic-question-section {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInQuestion 1s ease-out;
+        }
+
+        .romantic-question-section.show {
+            display: block;
+        }
+
+        @keyframes fadeInQuestion {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-divider::before,
+        .question-divider::after {
+            content: "";
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .question-star {
+            width: 25px;
+            height: 25px;
+            fill: var(--gold);
+            animation: starSpin 4s linear infinite;
+        }
+
+        @keyframes starSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .romantic-question {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(197, 160, 89, 0.6);
+            line-height: 1.4;
+        }
+
+        .question-subtitle {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.8);
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 35px;
+        }
+
+        .question-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .btn-yes, .btn-no {
+            font-family: 'Cinzel Decorative', serif;
+            padding: 15px 45px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            min-width: 130px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--gold), #d4af37);
+            color: #333;
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.5);
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(197, 160, 89, 0.7);
+        }
+
+        .btn-no {
+            background: transparent;
+            color: rgba(244, 228, 188, 0.7);
+            border: 2px solid rgba(244, 228, 188, 0.4);
+        }
+
+        .btn-no:hover {
+            background: rgba(244, 228, 188, 0.1);
+            border-color: rgba(244, 228, 188, 0.6);
+        }
+
+        /* CUENTA REGRESIVA AÑO NUEVO */
+        .new-year-countdown {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            animation: celebrationReveal 1s ease-out;
+        }
+
+        .new-year-countdown.show {
+            display: block;
+        }
+
+        @keyframes celebrationReveal {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .celebration-title {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(197, 160, 89, 0.8);
+        }
+
+        .celebration-subtitle {
+            font-family: 'Old Standard TT', serif;
+            color: var(--parchment);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .new-year-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .new-year-item {
+            background: linear-gradient(145deg, rgba(197, 160, 89, 0.2), rgba(197, 160, 89, 0.1));
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 25px 20px;
+            min-width: 90px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 20px rgba(197, 160, 89, 0.2);
+        }
+
+        .new-year-number {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--gold);
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(197, 160, 89, 0.6);
+        }
+
+        .new-year-unit {
+            font-family: 'Old Standard TT', serif;
+            color: var(--parchment);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .together-message {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 25px;
+            background: rgba(99, 13, 22, 0.3);
+            border-radius: 15px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* MENSAJE DE RECHAZO DULCE */
+        .sweet-rejection {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            animation: fadeInQuestion 1s ease-out;
+        }
+
+        .sweet-rejection.show {
+            display: block;
+        }
+
+        .rejection-title {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .rejection-message {
+            font-family: 'Old Standard TT', serif;
+            color: rgba(244, 228, 188, 0.85);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            max-width: 450px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -1295,6 +1507,64 @@
                     <p class="countdown-message">Viernes 2 de Enero, 2026 - 12:30 PM</p>
                 </div>
             </div>
+
+            <!-- PREGUNTA ROMANTICA (fuera de mystery-section) -->
+            <div class="romantic-question-section" id="romanticQuestion">
+                <div class="question-divider">
+                    <svg class="question-star" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+
+                <p class="romantic-question">Me permites empezar el 2026<br>junto a ti?</p>
+
+                <div class="question-buttons">
+                    <button class="btn-yes" onclick="acceptNewYear()">Si, quiero</button>
+                    <button class="btn-no" onclick="declineNewYear()">Ahora no</button>
+                </div>
+            </div>
+
+            <!-- CUENTA REGRESIVA AÑO NUEVO (aparece si dice SI) -->
+            <div class="new-year-countdown" id="newYearCountdown">
+                <h2 class="celebration-title">Juntos hacia el 2026</h2>
+                <p class="celebration-subtitle">Contando los segundos para comenzar este nuevo año a tu lado</p>
+
+                <div class="new-year-timer">
+                    <div class="new-year-item">
+                        <div class="new-year-number" id="nyDays">00</div>
+                        <div class="new-year-unit">Dias</div>
+                    </div>
+                    <div class="new-year-item">
+                        <div class="new-year-number" id="nyHours">00</div>
+                        <div class="new-year-unit">Horas</div>
+                    </div>
+                    <div class="new-year-item">
+                        <div class="new-year-number" id="nyMinutes">00</div>
+                        <div class="new-year-unit">Min</div>
+                    </div>
+                    <div class="new-year-item">
+                        <div class="new-year-number" id="nySeconds">00</div>
+                        <div class="new-year-unit">Seg</div>
+                    </div>
+                </div>
+
+                <p class="together-message">
+                    Gracias por decir que si...<br>
+                    Este sera el primero de muchos momentos especiales juntos.<br>
+                    Que el 2026 nos traiga todo lo hermoso que merecemos.
+                </p>
+            </div>
+
+            <!-- MENSAJE SI DICE NO -->
+            <div class="sweet-rejection" id="sweetRejection">
+                <h2 class="rejection-title">Esta bien, lo entiendo...</h2>
+                <p class="rejection-message">
+                    No pasa nada, de verdad.<br><br>
+                    Igual quiero que sepas que cada momento contigo ha sido especial para mi.<br><br>
+                    Cuando estes lista, aqui estare esperandote con la misma ilusion de siempre.<br><br>
+                    Feliz Año Nuevo, mi bobita hermosa.
+                </p>
+            </div>
         </div>
     </div>
 
@@ -1451,6 +1721,8 @@
                 // Mostrar sección de misterio cuando termine
                 setTimeout(() => {
                     document.getElementById('mysterySection').classList.add('show');
+                    // Mostrar pregunta romántica después
+                    showRomanticQuestion();
                 }, 1000);
                 return;
             }
@@ -1605,6 +1877,78 @@
         function closeConfirmation() {
             document.getElementById('modalOverlay').classList.remove('show');
             document.getElementById('confirmationModal').classList.remove('show');
+        }
+
+        // Mostrar pregunta romántica después de la sección de misterio
+        function showRomanticQuestion() {
+            setTimeout(() => {
+                document.getElementById('romanticQuestion').classList.add('show');
+            }, 2000);
+        }
+
+        // Aceptar empezar el 2026 juntos
+        async function acceptNewYear() {
+            // Ocultar pregunta y mostrar countdown
+            document.getElementById('romanticQuestion').classList.remove('show');
+            document.getElementById('newYearCountdown').classList.add('show');
+            
+            // Iniciar cuenta regresiva de año nuevo
+            startNewYearCountdown();
+
+            // Enviar notificación a Maycol
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tipo: 'nuevo-ano-si',
+                        mensaje: 'Mabel acepto empezar el 2026 contigo!',
+                        evento: 'Pregunta Año Nuevo 2026'
+                    })
+                });
+            } catch (error) {
+                console.log('Notificacion enviada');
+            }
+        }
+
+        // Declinar empezar el 2026 juntos
+        function declineNewYear() {
+            document.getElementById('romanticQuestion').classList.remove('show');
+            document.getElementById('sweetRejection').classList.add('show');
+        }
+
+        // Cuenta regresiva para Año Nuevo
+        function startNewYearCountdown() {
+            const targetDate = new Date('2026-01-01T00:00:00-05:00');
+
+            function updateNewYearCountdown() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    document.getElementById('nyDays').textContent = '00';
+                    document.getElementById('nyHours').textContent = '00';
+                    document.getElementById('nyMinutes').textContent = '00';
+                    document.getElementById('nySeconds').textContent = '00';
+                    // Cambiar mensaje cuando llegue el año nuevo
+                    document.querySelector('.celebration-title').textContent = 'Feliz 2026!';
+                    document.querySelector('.celebration-subtitle').textContent = 'Un nuevo año comienza junto a ti';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('nyDays').textContent = days.toString().padStart(2, '0');
+                document.getElementById('nyHours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('nyMinutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('nySeconds').textContent = seconds.toString().padStart(2, '0');
+            }
+
+            updateNewYearCountdown();
+            setInterval(updateNewYearCountdown, 1000);
         }
     </script>
 </body>

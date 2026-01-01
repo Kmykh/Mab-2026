@@ -43,6 +43,41 @@ exports.handler = async (event, context) => {
       process.env.TWILIO_AUTH_TOKEN
     );
 
+    // ========== NOTIFICACIÓN PREGUNTA AÑO NUEVO ==========
+    if (tipo === 'nuevo-ano-si') {
+      // SMS para ti cuando Mabel acepta empezar el 2026 contigo
+      await twilioClient.messages.create({
+        body: 'MABEL DIJO QUE SI! Acepto empezar el 2026 contigo! La cuenta regresiva para el Año Nuevo ya esta corriendo juntos.',
+        messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
+        to: TU_NUMERO
+      });
+
+      // Correo para ti
+      await transporter.sendMail({
+        from: '"Sistema de Invitacion" <' + process.env.EMAIL_USER + '>',
+        to: TU_EMAIL,
+        subject: 'MABEL DIJO SI - Empezaran el 2026 JUNTOS!',
+        html: `
+          <div style="font-family: Georgia, serif; max-width: 500px; margin: 0 auto; padding: 30px; background: linear-gradient(135deg, #1a0a2e, #2d1b4e); border-radius: 15px;">
+            <h1 style="color: #c5a059; text-align: center; font-size: 28px;">MABEL DIJO QUE SI!</h1>
+            <p style="color: #f4e4bc; text-align: center; font-size: 18px; line-height: 1.8;">
+              Acepto empezar el 2026 junto a ti.<br><br>
+              La cuenta regresiva para el Año Nuevo ya esta corriendo... JUNTOS!
+            </p>
+            <p style="color: #c5a059; text-align: center; font-size: 14px; margin-top: 30px;">
+              ${new Date().toLocaleString('es-PE')}
+            </p>
+          </div>
+        `
+      });
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, mensaje: 'Notificacion enviada' })
+      };
+    }
+
     if (tipo === 'aceptar') {
       
       // ========== CORREO 1: PARA MABEL (Romántico y especial) ==========
